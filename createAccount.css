@@ -17,7 +17,7 @@ body {
     background-size: cover;
 }
 
-#loginForm {
+#createAccountForm {
     background: rgba(255, 255, 255, 0.5);
     width: 18rem;
     border-radius: 1rem;
@@ -27,15 +27,8 @@ body {
     padding: 2rem;
     color: #0D300D;
 }
-#loginForm #options {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.8rem;
-    margin-bottom: 1rem;
-}
-#loginForm section {
+
+#createAccountForm section {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -46,31 +39,20 @@ body {
     background: white;
     position: relative;
 }
-#loginForm section #eyeBtn {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    right: 0.2rem;
-    width: 2rem;
-    background: none;
-    border: none;
-    padding: 0 0.5rem;
-    cursor: pointer;
-    color: gray;
-    font-size: 1rem;
-}
-#loginForm input {
+
+#createAccountForm input {
     flex: 1;
     border: none;
     padding: 0.5rem;
     border-radius: 0.5rem;
 }
-#loginForm input:focus {
+#createAccountForm input:focus {
     outline: none;
     border: none;
     box-shadow: none;
 }
-#loginForm button {
+
+#createAccountForm button {
     width: 100%;
     padding: 0.7rem;
     border: none;
@@ -81,11 +63,9 @@ body {
     cursor: pointer;
 }
 
-#loginForm a {
+#createAccountForm a {
     color: #0D300D;
     text-decoration: none;
     font-weight: bold;
     font-size: 0.8rem;
 }
-
-
