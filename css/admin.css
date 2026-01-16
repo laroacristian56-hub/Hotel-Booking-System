@@ -25,6 +25,18 @@ main {
     background: var(--main-bg);
 }
 
+#dashboard-page, #rooms-page, #booking-page, #payment-page, #reports-page {
+    display: none;
+    border: none;
+    background: var(--main-bg);
+    min-height: calc(100dvh - 6.3rem);
+    margin-top: 6rem;
+    width: calc(100% - 0.5rem);
+    color: var(--txt-color);
+    transition: 0.3s ease-in;
+    opacity: 0;
+}
+
 #sidebar {
     position: fixed;
     display: flex;
@@ -48,11 +60,28 @@ main {
     color: var(--txt-color);
 }
 
-#sidebar #sidebar-btn {
-    padding: 0.8rem;
-    color: var(--sidebar-txt-color);
+#sidebar .sidebar-btn {
+    padding: 0.9rem;
     text-decoration: none;
     color: var(--txt-color);
+    transition: 0.3s;
+    text-align: left;
+    margin-bottom: 0.2rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#sidebar .sidebar-btn.active {
+    background: var(--main-color);
+    border-radius: 0.5rem;
+    color: var(--sidebar-txt-color);
+}
+
+#sidebar .sidebar-btn:hover {
+    background: var(--main-color);
+    color: var(--sidebar-txt-color);
+    border-radius: 0.5rem;
 }
 
 #sidebar #home-btn img{
@@ -63,14 +92,128 @@ main {
 }
 
 #header {
-    position: sticky;
+    position: absolute;
     background: var(--main-bg);
     display: flex;
     align-items: center;
     top: 0;
-    left: 17rem;
     height: 3.4rem;
+    width: calc(100% - 2rem);
     padding: 1rem;
     color: var(--txt-color);
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
+
+#header #head-right {
+    position: absolute;
+    right: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#header #head-right button {
+    height: 3rem;
+    width: 3rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 2rem;
+}
+
+/* The Background Overlay */
+#profile-modal-bg {
+    display: none;             
+    justify-content: center;   
+    align-items: center;       
+    position: fixed;           
+    z-index: 1000;          
+    opacity: 0;   
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    transition: 0.3s;
+}
+
+/* Modal Card */
+#profile-modal-content {
+    background-color: var(--body-bg);
+    padding: 40px;
+    border-radius: 12px;       
+    text-align: center;        
+    width: 300px;    
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+#profile-modal-content img {
+    width: 100px;             
+    height: 100px;
+    border-radius: 50%;        
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid var(--main-color); 
+}
+
+#profile-modal-content h2 {
+    margin: 0;
+    color: var(--txt-color);
+    font-size: 2rem;
+    letter-spacing: 1px;
+}
+
+#profile-modal-content hr {
+    border: 0;
+    height: 1px;
+    background: #ddd;
+    margin: 0 20px;            
+}
+
+#settings-btn {
+    background-color: var(--main-color); 
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;            
+    transition: background 0.3s;
+}
+
+#settings-btn:hover {
+    background-color: #145231;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #aaa;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.close-btn:hover {
+    color: black;
+}
+
+#logout-btn {
+    background-color: white;
+    color: #dc3545;  
+    border: 1px solid #dc3545; 
+    padding: 10px 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    transition: all 0.3s;
+}
+
+#logout-btn:hover {
+    background-color: #dc3545;
+    color: white;
+}
+

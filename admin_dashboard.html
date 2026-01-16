@@ -8,50 +8,83 @@
     <title>Hotel Booking System</title>
 </head>
 <body>
+
+    <div id="profile-modal-bg">
+    <div id="profile-modal-content">
+        <span class="close-btn" onclick="closeProfile()">&times;</span>
+        
+        <img src="assets/admin.png" alt="admin-profile">
+        <h2>ADMIN</h2>
+        
+        <br><hr><br>
+        
+        <button type="button" id="settings-btn">
+            <i class="bi bi-gear-fill"></i> Settings
+        </button>
+        <br><br>
+        <button type="button" id="logout-btn">
+            <i class="bi bi-box-arrow-right"></i> Logout
+        </button>
+    </div>
+</div>
+
     <section id="sidebar">
-        <a href="http://" id="home-btn">
+        <a href="admin_dashboard.php" id="home-btn">
             <img src="assets/logo/logo.png" alt="logo">
         </a>
-        <hr><br><br>
-        <a href="" id="sidebar-btn"><i class="bi bi-window-sidebar"></i>&nbsp; Dashboard</a>
-        <a href="" id="sidebar-btn"><i class="bi bi-house-gear"></i>&nbsp; Rooms</a>
-        <a href="" id="sidebar-btn"><i class="bi bi-calendar-check"></i>&nbsp; Booking</a>
-        <a href="" id="sidebar-btn"><i class="bi bi-credit-card"></i>&nbsp; Payment</a>
-        <a href="" id="sidebar-btn"><i class="bi bi-bar-chart-line"></i>&nbsp; Reports</a>
+        <br><br><br>
+        <button id="dashboard-btn" class="sidebar-btn" onclick="openDashboardPage()">
+            <i class="bi bi-window-sidebar"></i>&nbsp; Dashboard
+        </button>
+
+        <button id="rooms-btn" class="sidebar-btn" onclick="openRoomPage()">
+            <i class="bi bi-house-gear"></i>&nbsp; Rooms
+        </button>
+
+        <button id="booking-btn" class="sidebar-btn" onclick="openBookingPage()">
+            <i class="bi bi-calendar-check"></i>&nbsp; Booking
+        </button>
+
+        <button id="payment-btn" class="sidebar-btn" onclick="openPaymentPage()">
+            <i class="bi bi-credit-card"></i>&nbsp; Payment
+        </button>
+
+        <button id="reports-btn" class="sidebar-btn" onclick="openReportsPage()">
+            <i class="bi bi-bar-chart-line"></i>&nbsp; Reports
+        </button>
+
     </section>
     
     <main>
         <nav id="header">
-        <h2>Dashboard</h2>
-        <div id="realtime-clock" class="d-none d-md-block text-secondary small fw-bold px-3"></div>
+        <h2 id="mainTitleText">Dashboard</h2>
+        <div id="head-right">
+            <div id="realtime-clock" class="d-none d-md-block text-secondary small fw-bold px-3"></div>
+            <button title="profile-btn" type="button" onclick="openProfile()"><i class="bi bi-person-circle"></i></button>
+        </div>
+        
         </nav>
+        <section id="dashboard-page">
+            <p>Dashboard</p>
+
+        </section>
+        <section id="rooms-page">
+            <p>Rooms</p>
+
+        </section>
+        <section id="booking-page">
+            <p>Booking</p>
+
+        </section>
+        <section id="payment-page">
+            <p>Payment</p>
+
+        </section>
+        <section id="reports-page">
+            <p>Reports</p>
+            
+        </section>
     </main>
 </body>
-
-<script>
-    function updateClock() {
-        const clockElement = document.getElementById('realtime-clock');
-        const now = new Date();
-        
-        // Format options: "Fri, Jan 16, 2026 | 12:00:00 PM"
-        const options = { 
-            weekday: 'short', 
-            year: 'numeric', 
-            month: 'short', 
-            day: 'numeric',
-            hour: '2-digit', 
-            minute: '2-digit', 
-            second: '2-digit' 
-        };
-        
-        // Combine date and time with a separator
-        const dateString = now.toLocaleDateString('en-US', options).replace(',', ''); 
-        
-        clockElement.innerText = dateString.replace(/(\d{4})/, '$1 |'); 
-    }
-
-    // Run every seconds
-    updateClock();
-    setInterval(updateClock, 1000);
-</script>
+<script src="script/admin_dashboard.js"></script>
 </html>
