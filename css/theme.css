@@ -4,4 +4,17 @@
     --main-bg: #E7E7E7;
     --sidebar-txt-color: white;
     --txt-color: black;
+    --card-bg: white;          
+    --border-color: #ddd;
+}
+
+body.dark-theme {
+    
+    --main-color: #091a09; 
+    --body-bg: #121212;
+    --main-bg: #1E1E1E;
+    --sidebar-txt-color: #E0E0E0; 
+    --txt-color: #E0E0E0;
+    --card-bg: #2C2C2C;
+    --border-color: #333;
 }
