@@ -88,25 +88,65 @@ $room_result = mysqli_query($connect, $room_sql);
 
 
             <div class="room-list-container" id="roomContainer">
-                <?php 
-                if (mysqli_num_rows($room_result) > 0) {
-                    while($row = mysqli_fetch_assoc($room_result)) {
-                ?>
-                    <div class="room-card">
-                        <img src="uploads/<?php echo $row['image_path']; ?>" alt="Room Image">
-                        <div class="room-card-body">
-                            <h3><?php echo $row['name']; ?></h3>
-                            <p class="price">₱<?php echo number_format($row['price_per_night'], 2); ?></p>
-                            <p style="font-size: 14px; color: #555;">Capacity: <?php echo $row['capacity']; ?> persons</p>
-                        </div>
+            <?php 
+            if (mysqli_num_rows($room_result) > 0) {
+                while($row = mysqli_fetch_assoc($room_result)) {
+            ?>
+                <div class="room-card" 
+                    style="cursor: pointer;"
+                    onclick="openEditModal(
+                        '<?php echo $row['id']; ?>', 
+                        '<?php echo addslashes($row['name']); ?>', 
+                        '<?php echo $row['price_per_night']; ?>', 
+                        '<?php echo $row['capacity']; ?>', 
+                        '<?php echo addslashes($row['description']); ?>'
+                    )">
+                    
+                    <img src="uploads/<?php echo $row['image_path']; ?>" alt="Room Image">
+                    <div class="room-card-body">
+                        <h3><?php echo $row['name']; ?></h3>
+                        <p class="price">₱<?php echo number_format($row['price_per_night'], 2); ?></p>
+                        <p style="font-size: 14px; color: #555;">Capacity: <?php echo $row['capacity']; ?> persons</p>
                     </div>
-                <?php 
-                    }
-                } else {
-                    echo "<p id='no-rooms-msg'>No rooms added yet.</p>";
+                </div>
+            <?php 
                 }
-                ?>
+            } else {
+                echo "<p id='no-rooms-msg'>No rooms added yet.</p>";
+            }
+            ?>
+        </div>
+
+        <div id="editRoomModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeEditModal()">&times;</span>
+                <h2 style="text-align: center; margin-bottom: 20px;">Edit Room Details</h2>
+                
+                <form id="editRoomForm" enctype="multipart/form-data">
+                    <input type="hidden" name="room_id" id="edit_room_id">
+
+                    <label>Room Type Name</label>
+                    <input type="text" name="name" id="edit_name" required>
+
+                    <label>Price per Night</label>
+                    <input type="number" name="price" id="edit_price" required>
+
+                    <label>Max Capacity</label>
+                    <input type="number" name="capacity" id="edit_capacity" required>
+
+                    <label>Description</label>
+                    <textarea name="description" id="edit_description" rows="4"></textarea>
+
+                    <label>Change Image (Optional)</label>
+                    <input type="file" name="room_image">
+
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <button type="button" onclick="deleteRoom()" style="background: #dc3545; color: white; border: none; padding: 10px; flex: 1; border-radius: 4px; cursor: pointer;">Delete Room</button>
+                        <button type="submit" class="submit-btn" style="flex: 1;">Save Changes</button>
+                    </div>
+                </form>
             </div>
+        </div>
         </section>
 
         <section id="booking-page">

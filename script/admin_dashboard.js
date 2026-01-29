@@ -4,11 +4,11 @@ document.addEventListener("DOMContentLoaded", () => {
     openDashboardPage(); 
 });
 
-// Add this to your script
+// --- DARK THEME TOGGLE ---
 function toggleTheme() {
     document.body.classList.toggle('dark-theme');
     
-    // Optional: Save preference to local storage
+    // Save preference to local storage
     if (document.body.classList.contains('dark-theme')) {
         localStorage.setItem('theme', 'dark');
     } else {
@@ -235,3 +235,97 @@ function openReportsPage() {
         })
         .catch(error => console.error('Error:', error));
     });
+
+
+
+
+    // --- EDIT MODAL LOGIC ---
+var editModal = document.getElementById("editRoomModal");
+
+function openEditModal(id, name, price, capacity, desc) {
+    // 1. Fill the form with the data passed from the card
+    document.getElementById('edit_room_id').value = id;
+    document.getElementById('edit_name').value = name;
+    document.getElementById('edit_price').value = price;
+    document.getElementById('edit_capacity').value = capacity;
+    document.getElementById('edit_description').value = desc;
+
+    // 2. Show the modal
+    editModal.style.display = "block";
+    setTimeout(() => {
+        editModal.style.opacity = "1";
+    },250);
+}
+
+function closeEditModal() {
+    setTimeout(() => {
+        editModal.style.opacity = "0";
+    },250);
+    editModal.style.display = "none";
+}
+
+// Close if clicked outside
+window.onclick = function(event) {
+    if (event.target == editModal) {
+    this.setTimeout(() => {
+            editModal.style.opacity = "0";
+        },250);
+        editModal.style.display = "none";
+    }
+    
+    var addModal = document.getElementById("addRoomModal");
+    if (event.target == addModal) {
+    this.setTimeout(() => {
+            addModal.style.opacity = "0";
+        },250);
+        addModal.style.display = "none";
+    }
+}
+
+// --- HANDLE UPDATE SUBMISSION ---
+document.getElementById('editRoomForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    if(!confirm("Save changes to this room?")) return;
+
+    var formData = new FormData(this);
+
+    fetch('update_delete_room.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        if (data.trim() === "updated") {
+            alert("Room updated successfully!");
+            location.reload(); // Refresh to show changes
+        } else {
+            alert("Error: " + data);
+        }
+    });
+});
+
+// --- HANDLE DELETE ACTION ---
+function deleteRoom() {
+    var id = document.getElementById('edit_room_id').value;
+    
+    if(confirm("Are you sure you want to DELETE this room? This cannot be undone.")) {
+        var formData = new FormData();
+        formData.append('room_id', id);
+        formData.append('action', 'delete');
+
+        fetch('update_delete_room.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            if (data.trim() === "deleted") {
+                alert("Room deleted.");
+                location.reload(); // Refresh to remove the card
+            } else {
+                alert("Error deleting: " + data);
+            }
+        });
+    }
+}

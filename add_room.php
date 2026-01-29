@@ -14,10 +14,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             VALUES ('$name', '$description', '$price', '$capacity', '$image')";
 
     if (mysqli_query($connect, $sql)) {
+        // 1. GET THE ID OF THE NEWLY CREATED ROOM
+        $new_id = mysqli_insert_id($connect);
+        
         move_uploaded_file($_FILES['room_image']['tmp_name'], $target);
 
         ?>
-        <div class="room-card">
+        <div class="room-card" 
+             style="cursor: pointer;"
+             onclick="openEditModal(
+                '<?php echo $new_id; ?>', 
+                '<?php echo addslashes($name); ?>', 
+                '<?php echo $price; ?>', 
+                '<?php echo $capacity; ?>', 
+                '<?php echo addslashes($description); ?>'
+             )">
+             
             <img src="uploads/<?php echo $image; ?>" alt="Room Image">
             <div class="room-card-body">
                 <h3><?php echo $name; ?></h3>
@@ -27,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
         <?php
     } else {
-        echo "Error"; // Simple error message
+        echo "Error: " . mysqli_error($connect);
     }
 }
 ?>
