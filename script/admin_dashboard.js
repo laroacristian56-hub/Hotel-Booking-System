@@ -138,6 +138,14 @@ function openRoomPage() {
     setTimeout(() => {
         pg.style.opacity = "1";
     }, 200);
+
+    // --- REFRESH INVENTORY TABLE ---
+    fetch('fetch_inventory_table.php')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('inventoryTableBody').innerHTML = data;
+        })
+        .catch(error => console.error('Error loading inventory:', error));
 }
 
 function openBookingPage() {
@@ -475,3 +483,34 @@ var phyModal = document.getElementById("physicalRoomModal");
             });
         }
     }
+
+    // ---- FOR PAYMENTS PAGE ---- 
+    // --- UPDATE PAYMENT STATUS ---
+function updatePayment(id, status) {
+    var action = "";
+    if(status === 'paid') {
+        action = "Verify this payment? \n(This will mark the booking as Confirmed)";
+    } else {
+        action = "REFUND this payment? \n\nWARNING: \n1. Ensure you have sent the money back manually.\n2. This will auto-CANCEL the booking.\n3. This will make the room AVAILABLE.";
+    }
+    
+    if(confirm(action)) {
+        var formData = new FormData();
+        formData.append('payment_id', id);
+        formData.append('status', status);
+
+        fetch('update_payment.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            if (data.trim() === "success") {
+                alert("Status updated successfully!");
+                location.reload(); 
+            } else {
+                alert("Error: " + data);
+            }
+        });
+    }
+}

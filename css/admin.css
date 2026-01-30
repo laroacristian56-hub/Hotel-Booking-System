@@ -245,7 +245,7 @@ main {
 /* ===================== */
 
 
-/* --- 2. CARD STYLES --- */
+/* --- CARD STYLES --- */
     .room-list-container {
         display: flex;
         flex-wrap: wrap;
@@ -260,10 +260,8 @@ main {
         color: var(--txt-color);
         border: 1px solid var(--border-color);
         border-radius: 8px;
-
         width: 250px;
-        flex: 0 0 auto; /* IMPORTANT: prevents shrinking */
-
+        flex: 0 0 auto;
         overflow: hidden;
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         animation: fadeIn 0.5s;
@@ -296,7 +294,7 @@ main {
         font-size: 16px;
     }
 
-    /* --- 3. MODAL STYLES --- */
+    /* --- MODAL STYLES --- */
     .modal, #physicalRoomModal {
         display: none; 
         opacity: 0;
@@ -454,3 +452,12 @@ select {
     border-radius: 4px;
     cursor: pointer;
 }
+
+/* ======================================================= */
+/* For payment page
+
+/* Payment Status Colors */
+.status-paid { background-color: #28a745; color: white; }
+.status-pending { background-color: #ffc107; color: black; }
+.status-failed { background-color: #dc3545; color: white; }
+.status-refunded { background-color: #6c757d; color: white; }

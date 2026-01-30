@@ -1,10 +1,6 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
 
-
-
-
-
 * {
     padding: 0;
     margin: 0;
@@ -15,7 +11,6 @@
     "GRAD" 0;
     box-sizing: border-box;
     scroll-behavior: smooth;
-
 }
 
 body {
@@ -31,11 +26,9 @@ main {
     left: 15rem;
     right: 0;
     background: var(--main-bg);
-    
-
 }
 
-#dashboard-page, #rooms-page, #payment-page,#booking-page,#booking-status-page {
+#dashboard-page, #rooms-page, #payment-page, #booking-page, #booking-status-page {
     display: none;
     border: none;
     background: var(--main-bg);
@@ -60,7 +53,6 @@ main {
     z-index: 1;
     margin: auto;
     padding: 1rem;
-  
 }
 
 #sidebar #home-btn {
@@ -95,7 +87,7 @@ main {
     border-radius: 0.5rem;
 }
 
-#sidebar #home-btn img{
+#sidebar #home-btn img {
     width: 5rem;
     height: 5rem;
     border-radius: 2.5rem;
@@ -111,7 +103,6 @@ main {
     height: 3.4rem;
     width: calc(100% - 2rem);
     padding: 1rem;
-    
     color: var(--txt-color);
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
@@ -135,17 +126,17 @@ main {
 
 /* The Background Overlay */
 #profile-modal-bg {
-    display: none;             
-    justify-content: center;   
-    align-items: center;       
-    position: fixed;           
-    z-index: 1000;          
-    opacity: 0;   
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    opacity: 0;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
+    background-color: rgba(0, 0, 0, 0.5);
     transition: 0.3s;
 }
 
@@ -153,20 +144,20 @@ main {
 #profile-modal-content {
     background-color: var(--body-bg);
     padding: 40px;
-    border-radius: 12px;       
-    text-align: center;        
-    width: 300px;    
+    border-radius: 12px;
+    text-align: center;
+    width: 300px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     position: relative;
 }
 
 #profile-modal-content img {
-    width: 100px;             
+    width: 100px;
     height: 100px;
-    border-radius: 50%;        
+    border-radius: 50%;
     object-fit: cover;
     margin-bottom: 15px;
-    border: 3px solid var(--main-color); 
+    border: 3px solid var(--main-color);
 }
 
 #profile-modal-content h2 {
@@ -180,18 +171,18 @@ main {
     border: 0;
     height: 1px;
     background: #ddd;
-    margin: 0 20px;            
+    margin: 0 20px;
 }
 
 #settings-btn {
-    background-color: var(--main-color); 
+    background-color: var(--main-color);
     color: white;
     padding: 10px 24px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    width: 100%;            
+    width: 100%;
     transition: background 0.3s;
 }
 
@@ -208,14 +199,15 @@ main {
     font-weight: bold;
     cursor: pointer;
 }
+
 .close-btn:hover {
     color: black;
 }
 
 #logout-btn {
     background-color: white;
-    color: #dc3545;  
-    border: 1px solid #dc3545; 
+    color: #dc3545;
+    border: 1px solid #dc3545;
     padding: 10px 24px;
     border-radius: 5px;
     cursor: pointer;
@@ -229,31 +221,27 @@ main {
     color: white;
 }
 
-
-h1{
-text-align: center;
+h1 {
+    text-align: center;
 }
 
-
-/*Dashboard image Slider*/
+/* Dashboard image Slider */
 
 .ImageSlider {
     position: absolute;
     top: 50%;
     left: 50%;
-  
     transform: translate(-50%, -50%);
     width: 1000px;
     height: 600px;
     background: #eaeaea;
     box-shadow: 0 30px 50px #646464;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .slide {
     margin-top: 50px;
 }
-
 
 .items {
     width: 200px;
@@ -269,7 +257,6 @@ text-align: center;
     transition: 1s;
 }
 
-
 .slide .items:nth-child(1),
 .slide .items:nth-child(2) {
     top: 0;
@@ -280,47 +267,42 @@ text-align: center;
     height: 100%;
 }
 
-
 .slide .items:nth-child(3) { left: 50%; }
 .slide .items:nth-child(4) { left: calc(50% + 220px); }
 .slide .items:nth-child(5) { left: calc(50% + 440px); }
-
 
 .slide .items:nth-child(n + 6) {
     left: calc(50% + 660px);
     opacity: 0;
 }
 
-
-
-
 .button {
     width: 100%;
     position: absolute;
-    top: 50%; 
-    transform: translateY(-50%); 
+    top: 50%;
+    transform: translateY(-50%);
     display: flex;
     justify-content: space-between;
-    padding: 0 20px; 
+    padding: 0 20px;
     z-index: 100;
-    pointer-events: none; 
+    pointer-events: none;
 }
 
 .button button {
     width: 50px;
     height: 50px;
-    border-radius: 30%; 
+    border-radius: 30%;
     border: 1px solid #fff;
-    background: rgba(255, 255, 255, 0.3); 
+    background: rgba(255, 255, 255, 0.3);
     color: white;
     cursor: pointer;
-    pointer-events: auto; 
+    pointer-events: auto;
     transition: 0.3s;
     font-size: 20px;
 }
 
 .button button:hover {
-    background:var(--main-color);
+    background: var(--main-color);
     color: var(--main-bg);
 }
 
@@ -330,9 +312,9 @@ text-align: center;
     left: 100px;
     width: 300px;
     text-align: left;
-    color: #fff; 
+    color: #fff;
     display: none;
-    z-index: 10; 
+    z-index: 10;
 }
 
 .slide .items:nth-child(2) .Content {
@@ -340,29 +322,80 @@ text-align: center;
 }
 
 .BookingBtn {
-
-  width: 10rem;
-   height: 3rem;
-   background-color: #0D300D;
+    width: 10rem;
+    height: 3rem;
+    background-color: #0D300D;
     border-radius: 20px;
     border: none;
     cursor: pointer;
-    pointer-events: auto; 
+    pointer-events: auto;
     transition: 0.3s;
-    color:white;
+    color: white;
 }
-.BookingBtn .BookingBtn:hover {
-    background:var(--main-color);
+
+.BookingBtn:hover {
+    background: var(--main-color);
     color: var(--main-bg);
 }
 
-
-
-
 /* Pages */
-#dashboard-page, #booking-page, #rooms-page, #payment-page,#booking-status-page {
+#dashboard-page, #booking-page, #rooms-page, #payment-page, #booking-status-page {
     background-color: var(--body-bg);
-    min-height: 100vh; 
+    min-height: 100vh;
     padding: 30px;
     overflow: auto;
+}
+
+/* ────────────────────────────────────────────────
+   NEW ROOM CARDS STYLES (added for Rooms page)
+───────────────────────────────────────────────── */
+
+.room-type-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: flex-start;   /* or center / space-between — choose what looks best */
+}
+
+.room-card {
+    width: 240px;
+    background: var(--main-bg);
+    border-radius: 10px;
+    padding: 10px;
+    color: var(--txt-color);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.room-card:hover {
+    transform: translateY(-5px);
+    box-shadow: rgba(0, 0, 0, 0.30) 0px 3px 8px;
+}
+
+.room-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.room-card h3 {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.room-card .price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #2e7d32;           /* green price color */
+    margin: 4px 0;
+}
+
+.room-card .capacity {
+    font-size: 0.9rem;
+    color: #777;
+    margin: 0;
 }

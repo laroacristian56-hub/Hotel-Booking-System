@@ -14,19 +14,26 @@ $booking_sql = "SELECT b.*, u.full_name, r.name as room_name
                 ORDER BY b.created_at DESC";
 $booking_result = mysqli_query($connect, $booking_sql);
 
-// 1. FETCH ROOM TYPES FOR DROPDOWN
+// FETCH ROOM TYPES FOR DROPDOWN
 $types_sql = "SELECT * FROM room_types";
 $types_result = mysqli_query($connect, $types_sql);
 
-// 2. FETCH PHYSICAL ROOMS (INVENTORY)
+// FETCH PHYSICAL ROOMS (INVENTORY)
 $inventory_sql = "SELECT rooms.*, room_types.name as type_name 
                   FROM rooms 
                   JOIN room_types ON rooms.room_type_id = room_types.id 
                   ORDER BY rooms.room_number ASC";
 $inventory_result = mysqli_query($connect, $inventory_sql);
 
-?>
+// FETCH PAYMENTS
+$payment_sql = "SELECT p.*, b.id as booking_ref, u.full_name 
+                FROM payments p 
+                JOIN bookings b ON p.booking_id = b.id 
+                JOIN users u ON b.user_id = u.id 
+                ORDER BY p.payment_date DESC";
+$payment_result = mysqli_query($connect, $payment_sql);
 
+?>
 
 
 <!DOCTYPE html>
@@ -214,64 +221,64 @@ $inventory_result = mysqli_query($connect, $inventory_sql);
 
 
         <div class="inventory-section">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin: auto; margin-bottom: 15px; ">
-        <h3>Room Management</h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin: auto; margin-bottom: 15px; ">
+                <h3>Room Management</h3>
         
-    </div>
-
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Room No.</th>
-                    <th>Type</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php 
-                
-                $inventory_sql = "SELECT rooms.*, room_types.name as type_name 
-                                  FROM rooms 
-                                  JOIN room_types ON rooms.room_type_id = room_types.id 
-                                  ORDER BY rooms.room_number ASC";
-                $inventory_result = mysqli_query($connect, $inventory_sql);
-
-                if (mysqli_num_rows($inventory_result) > 0) {
-                    while($inv = mysqli_fetch_assoc($inventory_result)) {
-                ?>
-                <tr>
-                    <td><strong><?php echo $inv['room_number']; ?></strong></td>
-                    <td><?php echo $inv['type_name']; ?></td>
-                    <td>
-                        <span class="status-badge status-<?php echo $inv['status']; ?>">
-                            <?php echo ucfirst($inv['status']); ?>
-                        </span>
-                    </td>
-                    <td>
-                        <button class="edit-btn-small" 
-                            onclick="openPhysicalModal('edit', '<?php echo $inv['id']; ?>', '<?php echo $inv['room_number']; ?>', '<?php echo $inv['room_type_id']; ?>', '<?php echo $inv['status']; ?>')"
-                            style="background:#ffc107; color:black; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-right:5px;">
-                            Edit
-                        </button>
-                        
-                        <button class="delete-btn-small" 
-                            onclick="deletePhysicalRoom(<?php echo $inv['id']; ?>)"
-                            style="background:#dc3545; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-                <?php 
-                    }
-                } else {
-                    echo "<tr><td colspan='4' style='text-align:center;'>No rooms added yet.</td></tr>";
-                }
-                ?>
-            </tbody>
-            </table>
             </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Room No.</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryTableBody">
+                        <?php 
+                        
+                        $inventory_sql = "SELECT rooms.*, room_types.name as type_name 
+                                        FROM rooms 
+                                        JOIN room_types ON rooms.room_type_id = room_types.id 
+                                        ORDER BY rooms.room_number ASC";
+                        $inventory_result = mysqli_query($connect, $inventory_sql);
+
+                        if (mysqli_num_rows($inventory_result) > 0) {
+                            while($inv = mysqli_fetch_assoc($inventory_result)) {
+                        ?>
+                        <tr>
+                            <td><strong><?php echo $inv['room_number']; ?></strong></td>
+                            <td><?php echo $inv['type_name']; ?></td>
+                            <td>
+                                <span class="status-badge status-<?php echo $inv['status']; ?>">
+                                    <?php echo ucfirst($inv['status']); ?>
+                                </span>
+                            </td>
+                            <td>
+                                <button class="edit-btn-small" 
+                                    onclick="openPhysicalModal('edit', '<?php echo $inv['id']; ?>', '<?php echo $inv['room_number']; ?>', '<?php echo $inv['room_type_id']; ?>', '<?php echo $inv['status']; ?>')"
+                                    style="background:#ffc107; color:black; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; margin-right:5px;">
+                                    Edit
+                                </button>
+                                
+                                <button class="delete-btn-small" 
+                                    onclick="deletePhysicalRoom(<?php echo $inv['id']; ?>)"
+                                    style="background:#dc3545; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                        <?php 
+                            }
+                        } else {
+                            echo "<tr><td colspan='4' style='text-align:center;'>No rooms added yet.</td></tr>";
+                        }
+                        ?>
+                    </tbody>
+                    </table>
+                </div>
         </div>
 
 
@@ -332,6 +339,66 @@ $inventory_result = mysqli_query($connect, $inventory_sql);
         </section>
         <section id="payment-page">
             <p>Payment</p>
+
+        <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ref #</th>
+                            <th>Guest Name</th>
+                            <th>Booking ID</th>
+                            <th>Amount</th>
+                            <th>Type</th>
+                            <th>Method</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                        if (mysqli_num_rows($payment_result) > 0) {
+                            while($pay = mysqli_fetch_assoc($payment_result)) {
+                                // Color coding
+                                $badge_class = 'status-' . $pay['status']; // e.g., status-paid
+                        ?>
+                        <tr>
+                            <td><small><?php echo $pay['transaction_reference']; ?></small></td>
+                            <td><?php echo $pay['full_name']; ?></td>
+                            <td>#<?php echo $pay['booking_ref']; ?></td>
+                            <td><strong>₱<?php echo number_format($pay['amount'], 2); ?></strong></td>
+                            <td><?php echo ucfirst($pay['payment_type']); ?></td>
+                            <td><?php echo $pay['payment_method']; ?></td>
+                            <td><?php echo date('M d, Y', strtotime($pay['payment_date'])); ?></td>
+                            <td>
+                                <span class="status-badge <?php echo $badge_class; ?>">
+                                    <?php echo ucfirst($pay['status']); ?>
+                                </span>
+                            </td>
+                            <td>
+                                <?php if($pay['status'] == 'pending') { ?>
+                                    <button onclick="updatePayment(<?php echo $pay['id']; ?>, 'paid')" 
+                                            style="background:#28a745; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">
+                                        Verify
+                                    </button>
+                                <?php } elseif($pay['status'] == 'paid') { ?>
+                                    <button onclick="updatePayment(<?php echo $pay['id']; ?>, 'refunded')" 
+                                            style="background:#dc3545; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">
+                                        Refund
+                                    </button>
+                                <?php } else { echo "-"; } ?>
+                            </td>
+                        </tr>
+                        <?php 
+                            }
+                        } else {
+                            echo "<tr><td colspan='9' style='text-align:center;'>No payment records found.</td></tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+
         </section>
         <section id="reports-page">
             <p>Reports</p>
