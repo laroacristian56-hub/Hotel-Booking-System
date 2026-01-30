@@ -7,6 +7,12 @@ document.addEventListener("DOMContentLoaded", () => {
 // --- DARK THEME TOGGLE ---
 function toggleTheme() {
     document.body.classList.toggle('dark-theme');
+    const themeBtn = document.getElementById('theme-toggle-btn');
+    if (document.body.classList.contains('dark-theme')) {
+        themeBtn.innerHTML = '<i class="bi bi-sun-fill"></i>';
+    } else {
+        themeBtn.innerHTML = '<i class="bi bi-moon-stars-fill"></i>';
+    }
     
     // Save preference to local storage
     if (document.body.classList.contains('dark-theme')) {
@@ -19,6 +25,8 @@ function toggleTheme() {
 // Check preference on load
 if (localStorage.getItem('theme') === 'dark') {
     document.body.classList.add('dark-theme');
+    const themeBtn = document.getElementById('theme-toggle-btn');
+    themeBtn.innerHTML = '<i class="bi bi-sun-fill"></i>';
 }
 
 // FOR CLOCK
@@ -173,7 +181,7 @@ function openReportsPage() {
 
 
 
-// --- MODAL JAVASCRIPT ---
+// --- ADD ROOM MODAL ---
     var modal = document.getElementById("addRoomModal");
     var btn = document.getElementById("openAddRoomBtn");
     var span = document.getElementsByClassName("close-modal")[0];
@@ -280,6 +288,14 @@ window.onclick = function(event) {
         },250);
         addModal.style.display = "none";
     }
+
+    var phyModal = document.getElementById("physicalRoomModal");
+    if (event.target == phyModal) {
+    this.setTimeout(() => {
+            phyModal.style.opacity = "0";
+        },250);
+        phyModal.style.display = "none";
+    }
 }
 
 // --- HANDLE UPDATE SUBMISSION ---
@@ -298,7 +314,7 @@ document.getElementById('editRoomForm').addEventListener('submit', function(e) {
     .then(data => {
         if (data.trim() === "updated") {
             alert("Room updated successfully!");
-            location.reload(); // Refresh to show changes
+            location.reload();
         } else {
             alert("Error: " + data);
         }
@@ -322,10 +338,140 @@ function deleteRoom() {
         .then(data => {
             if (data.trim() === "deleted") {
                 alert("Room deleted.");
-                location.reload(); // Refresh to remove the card
+                location.reload();
             } else {
                 alert("Error deleting: " + data);
             }
         });
     }
 }
+
+// FOR HANDLING ADMIN BOOKING STATUS UPDATE
+// --- UPDATE BOOKING STATUS ---
+function updateStatus(selectElement, bookingId) {
+    var newStatus = selectElement.value;
+    var originalColor = selectElement.style.color;
+
+    // Visual feedback immediately
+    selectElement.style.opacity = "0.5"; 
+
+    var formData = new FormData();
+    formData.append('booking_id', bookingId);
+    formData.append('status', newStatus);
+
+    fetch('update_booking.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        selectElement.style.opacity = "1";
+        
+        if (data.trim() === "success") {
+            // Update color based on selection
+            if(newStatus == 'confirmed') selectElement.style.color = '#28a745';
+            else if(newStatus == 'pending') selectElement.style.color = '#ffc107';
+            else if(newStatus == 'cancelled') selectElement.style.color = '#dc3545';
+            else selectElement.style.color = 'var(--txt-color)';
+            
+            alert("Status updated to " + newStatus);
+        } else {
+            alert("Failed to update status.");
+            // Revert logic could go here
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+// FOR ADDING PHYSICAL ROOMS
+
+var phyModal = document.getElementById("physicalRoomModal");
+
+    
+    function openPhysicalModal(mode, id = '', number = '', typeId = '', status = 'available') {
+    
+    document.getElementById('phy_action').value = mode;
+    var selectElement = document.getElementById('phy_room_type');
+
+    // FETCH LATEST ROOM TYPES
+    
+    fetch('fetch_room_types.php')
+        .then(response => response.text())
+        .then(data => {
+            
+            selectElement.innerHTML = data;
+
+            // HANDLE ADD vs EDIT LOGIC
+            if (mode === 'add') {
+                document.getElementById('physicalModalTitle').innerText = "Add Physical Room";
+                document.getElementById('phy_room_number').value = "";
+                // Select the first option by default
+                selectElement.selectedIndex = 0; 
+
+            } else {
+                document.getElementById('physicalModalTitle').innerText = "Edit Physical Room";
+                document.getElementById('phy_room_id').value = id;
+                document.getElementById('phy_room_number').value = number;
+                document.getElementById('phy_status').value = status;
+                
+                // Set the correct room type selected
+                selectElement.value = typeId; 
+            }
+        })
+        .catch(error => console.error('Error fetching types:', error));
+
+        phyModal.style.display = "block";
+        setTimeout(() => {
+            phyModal.style.opacity = "1";
+        }, 250);
+    }
+
+    function closePhysicalModal() {
+        phyModal.style.opacity = "0";
+        setTimeout(() => {
+            phyModal.style.display = "none";
+        },250); 
+        
+    }
+
+    // 2. SAVE (Add/Edit) AJAX
+    document.getElementById('physicalRoomForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+
+        fetch('save_physical_room.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            if (data.trim() === "success") {
+                alert("Saved successfully!");
+                location.reload(); // Refresh to show changes
+            } else {
+                alert(data); 
+            }
+        });
+    });
+
+    // 3. DELETE AJAX
+    function deletePhysicalRoom(id) {
+        if(confirm("Are you sure you want to delete this room?")) {
+            var formData = new FormData();
+            formData.append('action', 'delete');
+            formData.append('id', id);
+
+            fetch('save_physical_room.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data.trim() === "deleted") {
+                    location.reload();
+                } else {
+                    alert(data);
+                }
+            });
+        }
+    }

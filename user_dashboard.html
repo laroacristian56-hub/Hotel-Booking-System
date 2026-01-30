@@ -3,10 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/User.css">
     <link rel="stylesheet" href="css/theme.css">
     <title>Hotel Booking System</title>
 </head>
 <body>
+
+    <div id="profile-modal-bg">
+    <div id="profile-modal-content">
+        <span class="close-btn" onclick="closeProfile()">&times;</span>
+        
+        <img src="assets/admin.png" alt="admin-profile">
+        <h2>USER</h2>
+        
+        <br><hr><br>
+        
+        <button type="button" id="settings-btn">
+            <i class="bi bi-gear-fill"></i> Settings
+        </button>
+        <br><br>
+        <button type="button" id="logout-btn">
+            <i class="bi bi-box-arrow-right"></i> Logout
+        </button>
+    </div>
+</div>
+
+    <section id="sidebar">
+        <a href="admin_dashboard.php" id="home-btn">
+            <img src="assets/logo/logo.png" alt="logo">
+        </a>
+        <br><br><br>
+        <button id="dashboard-btn" class="sidebar-btn" onclick="openDashboardPage()">
+            <i class="bi bi-window-sidebar"></i>&nbsp; Dashboard
+        </button>
+
+        <button id="rooms-btn" class="sidebar-btn" onclick="openRoomPage()">
+            <i class="bi bi-house-gear"></i>&nbsp; Rooms
+        </button>
+
+        <button id="booking-btn" class="sidebar-btn" onclick="openBookingPage()">
+            <i class="bi bi-calendar-check"></i>&nbsp; Booking
+        </button>
+
+        <button id="payment-btn" class="sidebar-btn" onclick="openPaymentPage()">
+            <i class="bi bi-credit-card"></i>&nbsp; Payment
+        </button>
+
+        <button id="booking-status-btn" class="sidebar-btn" onclick="openBookingStatusPage()">
+          <i class="ri-chat-check-fill"></i>&#xEB54; Booking Status
+        </button>
+
+
+
+    </section>
     
+    <main>
+        <nav id="header">
+        <h2 id="mainTitleText">Dashboard</h2>
+        <div id="head-right">
+            <div id="realtime-clock" class="d-none d-md-block text-secondary small fw-bold px-3"></div>
+            <button title="profile-btn" type="button" onclick="openProfile()"><i class="bi bi-person-circle"></i></button>
+        </div>
+        
+        </nav>
+        <section id="dashboard-page">
+           
+
+            
+           <h1>Welcome!</h1>
+
+          
+           
+
+
+
+        </section>
+        <section id="rooms-page">
+            <p>Rooms</p>
+
+            <div class="ImageSlider">
+           <div class="slide">
+
+            <div class="items" style="background-image: url(assets/Sofa.jpg);">
+                <div class="Content">
+                <div class="Name"><h2>Sofa</h2></div>
+                <br>
+                <div class="Description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo labore esse nesciunt, nam alias quae porro aperiam dicta magnam? Nemo tempora tempore numquam nihil repellendus dolorum corrupti exercitationem porro repudiandae.</div>
+                <button class="BookingBtn" onclick="openBookingPage()"> Book Now! </button>
+                </div>
+            </div>
+
+            <div class="items" style="background-image: url(assets/twin_Bed.jpeg);">
+                <div class="Content">
+                <div class="Name">Twin's Bed</div>
+                <div class="Description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor eveniet magnam deleniti eligendi deserunt! Beatae earum quo perspiciatis obcaecati quaerat possimus animi repellendus odio inventore incidunt assumenda, ut voluptatibus quisquam.</div>
+                <button class="BookingBtn" onclick="openBookingPage()"> Book Now! </button>
+
+                </div>
+            </div>
+
+            <div class="items" style="background-image: url(assets/swimmingpool.jpg);">
+                <div class="Content">
+                <div class="Name">Swimming Pools</div>
+                <div class="Description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo accusantium nulla nesciunt quidem a voluptates? Veritatis explicabo voluptates quo praesentium, illo velit quod totam ullam, odit ab hic ad eligendi?</div>
+                <button class="BookingBtn" onclick="openBookingPage()"> Book Now! </button>
+
+                </div>
+            </div>
+
+
+            <div class="items" style="background-image: url(assets/rooms.jpg);">
+                <div class="Content">
+                <div class="Name">Rooms</div>
+                <div class="Description">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laudantium nulla enim, molestias veniam praesentium, deserunt aut accusantium nesciunt, eum soluta commodi tempora maxime temporibus sint. Consequuntur natus vero corrupti dolor!</div>
+                <button class="BookingBtn" onclick="openBookingPage()"> Book Now! </button>
+
+                </div>
+            </div>
+
+           </div>
+
+    <div class="button">
+            <button class="prev">←</button>
+            <button class="next">→</button>
+        </div>
+           </div>
+        </section>
+        <section id="booking-page">
+            <p>Booking</p>
+
+        </section>
+        <section id="payment-page">
+            <p>Payment</p>
+
+         </section>
+
+        <section id="booking-status-page">
+            <p>Status</p>
+   </section>
+    </main>
 </body>
+<script src="script/User_dashboard.js"></script>
 </html>

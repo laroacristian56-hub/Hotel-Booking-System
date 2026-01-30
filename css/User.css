@@ -1,0 +1,368 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+
+
+
+
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Google Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-variation-settings:
+    "GRAD" 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+
+}
+
+body {
+    background: var(--body-bg);
+    overflow: hidden;
+}
+
+main {
+    height: 100vh;
+    width: 90%;
+    overflow: auto;
+    position: fixed;
+    left: 15rem;
+    right: 0;
+    background: var(--main-bg);
+    
+
+}
+
+#dashboard-page, #rooms-page, #payment-page,#booking-page,#booking-status-page {
+    display: none;
+    border: none;
+    background: var(--main-bg);
+    min-height: calc(100dvh - 6.3rem);
+    margin-top: 6rem;
+    width: calc(100% - 0.5rem);
+    color: var(--txt-color);
+    transition: 0.3s ease-in;
+    opacity: 0;
+}
+
+#sidebar {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    top: 0;
+    width: 13rem;
+    height: 100dvh;
+    background: var(--body-bg);
+    color: var(--txt-color);
+    z-index: 1;
+    margin: auto;
+    padding: 1rem;
+  
+}
+
+#sidebar #home-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    color: var(--txt-color);
+}
+
+#sidebar .sidebar-btn {
+    padding: 0.9rem;
+    text-decoration: none;
+    color: var(--txt-color);
+    transition: 0.3s;
+    text-align: left;
+    margin-bottom: 0.2rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#sidebar .sidebar-btn.active {
+    background: var(--main-color);
+    border-radius: 0.5rem;
+    color: var(--sidebar-txt-color);
+}
+
+#sidebar .sidebar-btn:hover {
+    background: var(--main-color);
+    color: var(--sidebar-txt-color);
+    border-radius: 0.5rem;
+}
+
+#sidebar #home-btn img{
+    width: 5rem;
+    height: 5rem;
+    border-radius: 2.5rem;
+    border: white 1.5px solid;
+}
+
+#header {
+    position: absolute;
+    background: var(--main-bg);
+    display: flex;
+    align-items: center;
+    top: 0;
+    height: 3.4rem;
+    width: calc(100% - 2rem);
+    padding: 1rem;
+    
+    color: var(--txt-color);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+#header #head-right {
+    position: absolute;
+    right: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#header #head-right button {
+    height: 3rem;
+    width: 3rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 2rem;
+}
+
+/* The Background Overlay */
+#profile-modal-bg {
+    display: none;             
+    justify-content: center;   
+    align-items: center;       
+    position: fixed;           
+    z-index: 1000;          
+    opacity: 0;   
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    transition: 0.3s;
+}
+
+/* Modal Card */
+#profile-modal-content {
+    background-color: var(--body-bg);
+    padding: 40px;
+    border-radius: 12px;       
+    text-align: center;        
+    width: 300px;    
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+#profile-modal-content img {
+    width: 100px;             
+    height: 100px;
+    border-radius: 50%;        
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 3px solid var(--main-color); 
+}
+
+#profile-modal-content h2 {
+    margin: 0;
+    color: var(--txt-color);
+    font-size: 2rem;
+    letter-spacing: 1px;
+}
+
+#profile-modal-content hr {
+    border: 0;
+    height: 1px;
+    background: #ddd;
+    margin: 0 20px;            
+}
+
+#settings-btn {
+    background-color: var(--main-color); 
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;            
+    transition: background 0.3s;
+}
+
+#settings-btn:hover {
+    background-color: #145231;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #aaa;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.close-btn:hover {
+    color: black;
+}
+
+#logout-btn {
+    background-color: white;
+    color: #dc3545;  
+    border: 1px solid #dc3545; 
+    padding: 10px 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    transition: all 0.3s;
+}
+
+#logout-btn:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+
+h1{
+text-align: center;
+}
+
+
+/*Dashboard image Slider*/
+
+.ImageSlider {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  
+    transform: translate(-50%, -50%);
+    width: 1000px;
+    height: 600px;
+    background: #eaeaea;
+    box-shadow: 0 30px 50px #646464;
+    overflow: hidden; 
+}
+
+.slide {
+    margin-top: 50px;
+}
+
+
+.items {
+    width: 200px;
+    height: 300px;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    border-radius: 10px;
+    box-shadow: 0 30px 50px #505050;
+    background-position: 50% 50%;
+    background-size: cover;
+    display: inline-block;
+    transition: 1s;
+}
+
+
+.slide .items:nth-child(1),
+.slide .items:nth-child(2) {
+    top: 0;
+    left: 0;
+    transform: translate(0, 0);
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+.slide .items:nth-child(3) { left: 50%; }
+.slide .items:nth-child(4) { left: calc(50% + 220px); }
+.slide .items:nth-child(5) { left: calc(50% + 440px); }
+
+
+.slide .items:nth-child(n + 6) {
+    left: calc(50% + 660px);
+    opacity: 0;
+}
+
+
+
+
+.button {
+    width: 100%;
+    position: absolute;
+    top: 50%; 
+    transform: translateY(-50%); 
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px; 
+    z-index: 100;
+    pointer-events: none; 
+}
+
+.button button {
+    width: 50px;
+    height: 50px;
+    border-radius: 30%; 
+    border: 1px solid #fff;
+    background: rgba(255, 255, 255, 0.3); 
+    color: white;
+    cursor: pointer;
+    pointer-events: auto; 
+    transition: 0.3s;
+    font-size: 20px;
+}
+
+.button button:hover {
+    background:var(--main-color);
+    color: var(--main-bg);
+}
+
+.items .Content {
+    position: absolute;
+    top: 50%;
+    left: 100px;
+    width: 300px;
+    text-align: left;
+    color: #fff; 
+    display: none;
+    z-index: 10; 
+}
+
+.slide .items:nth-child(2) .Content {
+    display: block;
+}
+
+.BookingBtn {
+
+  width: 10rem;
+   height: 3rem;
+   background-color: #0D300D;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    pointer-events: auto; 
+    transition: 0.3s;
+    color:white;
+}
+.BookingBtn .BookingBtn:hover {
+    background:var(--main-color);
+    color: var(--main-bg);
+}
+
+
+
+
+/* Pages */
+#dashboard-page, #booking-page, #rooms-page, #payment-page,#booking-status-page {
+    background-color: var(--body-bg);
+    min-height: 100vh; 
+    padding: 30px;
+    overflow: auto;
+}
