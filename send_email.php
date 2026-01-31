@@ -18,7 +18,7 @@ function sendOTPEmail($recipientEmail, $otp) {
         
         // --- YOUR GMAIL CREDENTIALS ---
         $mail->Username   = 'apksci60@gmail.com';         // Replace with your Gmail
-        $mail->Password   = 'zkzy wqxn ghvi xjju';          // App password for Gmail
+        $mail->Password   = 'secrettt';          // App password for Gmail
         // ------------------------------
         
         $mail->SMTPSecure = 'ssl'; 
