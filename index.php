@@ -1,3 +1,22 @@
+<?php
+session_start();
+
+// --- ACTIVE SESSION CHECK ---
+// If the user is already logged in, redirect them immediately.
+if (isset($_SESSION['user_id'])) {
+    
+    // Check their role to send them to the correct dashboard
+    if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+        header("Location: admin_dashboard.php");
+        exit();
+    } else {
+        header("Location: user_dashboard.php");
+        exit();
+    }
+}
+// ----------------------------
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

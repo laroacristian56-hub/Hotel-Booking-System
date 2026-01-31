@@ -2,6 +2,20 @@
 include 'connect_db.php';
 session_start();
 
+// 2. Check if role is CORRECT
+if ($_SESSION['role'] !== 'admin') {
+    // If a normal User tries to access this page, kick them to User Home
+    header("Location: user_dashboard.php");
+    exit();
+}
+
+// --- Prevent user access the admin dashboard ---
+// 1. Check if logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: index.php");
+    exit();
+}
+
 // FETCH ROOMS
 $room_sql = "SELECT * FROM room_types";
 $room_result = mysqli_query($connect, $room_sql);
@@ -41,7 +55,7 @@ $payment_result = mysqli_query($connect, $payment_sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/theme.css">
     <title>Hotel Booking System</title>
     <style>
@@ -54,12 +68,32 @@ $payment_result = mysqli_query($connect, $payment_sql);
     <div id="profile-modal-bg">
         <div id="profile-modal-content">
             <span class="close-btn" onclick="closeProfile()">&times;</span>
-            <img src="assets/admin.png" alt="admin-profile">
-            <h2>ADMIN</h2>
+            
+            <?php 
+                // Default image
+                $profile_img = 'assets/default-user.png'; 
+                
+                // If Admin, use admin image
+                if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+                    $profile_img = 'assets/admin.png';
+                }
+            ?>
+            <img src="<?php echo $profile_img; ?>" alt="profile" style="object-fit:cover;">
+
+            <h2><?php echo isset($_SESSION['full_name']) ? $_SESSION['full_name'] : 'Guest'; ?></h2>
+            
+            <p style="color: #666; margin-top: -15px; text-transform: uppercase; font-size: 12px;">
+                <?php echo isset($_SESSION['role']) ? $_SESSION['role'] : ''; ?>
+            </p>
+
             <br><hr><br>
+            
             <button type="button" id="settings-btn"><i class="bi bi-gear-fill"></i> Settings</button>
             <br><br>
-            <button type="button" id="logout-btn"><i class="bi bi-box-arrow-right"></i> Logout</button>
+            
+            <button type="button" id="logout-btn" onclick="confirmLogout()">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
         </div>
     </div>
 <!-- =================== Add room MODAL ======================= -->
@@ -403,11 +437,55 @@ $payment_result = mysqli_query($connect, $payment_sql);
         <section id="reports-page">
             <p>Reports</p>
         </section>
-        <footer>
-        <p>&copy; 2026 Ivory Luxe Hotel. All rights reserved.</p>
-        </footer>
+        <footer class="site-footer">
+        <div class="footer-container">
+            
+            <div class="footer-col">
+                <h3>IvoryLuxe Hotel</h3>
+                <p>Experience luxury and comfort in the heart of the city. Your perfect getaway awaits.</p>
+                <div class="social-links">
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-instagram"></i></a>
+                    <a href="#"><i class="bi bi-twitter-x"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="user_home.php">Home</a></li>
+                    <li><a href="#rooms-page">Our Rooms</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Refund Policy</a></li>
+                    <li><a href="#">FAQs</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <ul class="contact-info">
+                    <li><i class="bi bi-geo-alt-fill"></i> 123 Luxury Ave, Quezon City</li>
+                    <li><i class="bi bi-telephone-fill"></i> +63 912 345 6789</li>
+                    <li><i class="bi bi-envelope-fill"></i> reservations@ivoryluxe.com</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; <?php echo date("Y"); ?> IvoryLuxe Hotel. All rights reserved.</p>
+        </div>
+    </footer>
     </main>
 </body>
-<script src="script/admin_dashboard.js"></script>
+<script src="script/dashboard.js"></script>
 
 </html>
